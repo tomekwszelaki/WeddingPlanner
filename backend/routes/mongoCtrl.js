@@ -39,7 +39,7 @@ function getConnection(callback) {
             return conn == null;
         },
         function (call) {
-            mongoClient.connect('mongodb://heroku_app24564035:sc82hd35sj5htmj9mmhi7e54au@ds033067.mongolab.com:33067/heroku_app24564035', function(err, db) {
+            mongoClient.connect(process.env.MONGOLAB_URI, {}, function(err, db) {
                 if (err) {
                     throw err;
                 }
