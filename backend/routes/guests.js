@@ -39,9 +39,8 @@ function getGuests(req, res) {
     winston.debug("getGuests request");
     mongo.execute(mongo.methods.find, mongo.collections.guests, null, {}, null, function(err, data) {
         if (err) {
-            console.error(err)
+            throw err
         }
-        console.log("found: " + data.length + " guests");
         res.set('Content-Type', 'application/json');
         res.set('Access-Control-Allow-Origin', '*');
         res.send(200, data);
