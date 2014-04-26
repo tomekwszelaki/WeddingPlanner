@@ -2,7 +2,7 @@
  * Created by tomasj on 28/01/14.
  */
 
-var collections = {guests: "guestList"}
+var collections = {guests: "guests"}
 var methods = {insert: insert, save: save, findOne: findOne, find: find, findAndModify: findAndModify, update: update}
 
 var config = require('../../config');
@@ -39,7 +39,7 @@ function getConnection(callback) {
             return conn == null;
         },
         function (call) {
-            mongoClient.connect(config.mongodb.mongolabUri, function(err, db) {
+            mongoClient.connect('mongodb://heroku_app24564035:sc82hd35sj5htmj9mmhi7e54au@ds033067.mongolab.com:33067/heroku_app24564035', function(err, db) {
                 if (err) {
                     throw err;
                 }
@@ -47,7 +47,7 @@ function getConnection(callback) {
                 winston.info("DB connection established");
                 return callback(null);
             })
-            setTimeout(call, 1000);
+            setTimeout(call, 3000);
         },
         function(err) {
             if (err) return callback(err);
@@ -119,9 +119,13 @@ function find(col, doc, cb) {
         // docs - is a cursor object, we have to convert it into an Array to be able to return it
         // WARNING / TODO: paging is necesasry as "toArray" loads the whole collection into memory
         docs.toArray(function(err, data) {
-            if (err) cb(err, null);
-            winston.debug("%s: %d", "record(s) found", data.length, {});
-            cb(null, data);
+            if (err) {
+                cb(err, null);
+            }
+            else {
+                winston.debug("%s: %d", "record(s) found", data.length, {});
+                cb(null, data);
+            }
         })
     });
 }

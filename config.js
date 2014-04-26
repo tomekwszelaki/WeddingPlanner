@@ -27,7 +27,7 @@ if (PRODUCTION) {
       auth: false,
       user: process.env.MONGODB_USER || 'admin',
       pass: process.env.MONGODB_PASS || 'holapapi',
-      mongolabUri: process.env.MONGOLAB_URI || 'mongodb://heroku_app24564035:sc82hd35sj5htmj9mmhi7e54au@ds033067.mongolab.com:33067/heroku_app24564035'
+      mongolabUri: process.env.MONGOLAB_URI
     };
 }
 //config.db same deal
