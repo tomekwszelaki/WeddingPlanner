@@ -3,7 +3,7 @@
  */
 var config =  require('./config');
 var winston = require("winston");
-winston.add(winston.transports.File, {filename: '../app.log', level: 'debug'}).remove(winston.transports.Console);
+//winston.add(winston.transports.File, {filename: '../app.log', level: 'debug'}).remove(winston.transports.Console);
 var express = require('express');
 var path = require('path');
 
