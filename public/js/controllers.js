@@ -26,7 +26,7 @@ guestListCtrls.controller('GuestListCtrl', ['$scope', '$http', function ($scope,
         });
     }
     $scope.load = function() {
-        $http.get('http://localhost:3000/guests')
+        $http.get('/guests')
             .success(function(data, status, headers, config) {
                 $scope.guestList = data;
                 $scope.refreshStats();
@@ -51,7 +51,7 @@ guestListCtrls.controller('GuestListCtrl', ['$scope', '$http', function ($scope,
             stayingFor: $scope.stayingFor,
             notes: $scope.notes
         }
-        $http.post('http://localhost:3000/guests', guest)
+        $http.post('/guests', guest)
             .success(function(data, status, headers, config) {
                 $scope.submitted = data;
                 $scope.name = "";
@@ -74,7 +74,7 @@ guestListCtrls.controller('GuestListCtrl', ['$scope', '$http', function ($scope,
         };
     $scope.editionEnabled = false;
     $scope.modifyGuest = function(guest) {
-        $http.put('http://localhost:3000/guests/' + guest._id, guest)
+        $http.put('guests/' + guest._id, guest)
                 .success(function(data, status, headers, config) {
                     $scope.submitted = data;
                     $scope.refreshStats();
