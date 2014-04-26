@@ -22,11 +22,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
 
-app.listen(config.express.port, config.express.ip, function (error) {
+app.listen(config.express.port, function (error) {
   if (error) {
     winston.error("Unable to listen for connections", error);
     process.exit(10);
   }
-  winston.info("express is listening on http://" +
-    config.express.ip + ":" + config.express.port);
+  winston.info("express is listening on port " + config.express.port);
 });

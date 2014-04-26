@@ -7,7 +7,7 @@ var config = module.exports;
 var PRODUCTION = process.env.NODE_ENV === "production";
 
 config.express = {
-  port: process.env.EXPRESS_PORT || 3000,
+  port: process.env.PORT || 5000,
   ip: "localhost"
 };
 
@@ -17,7 +17,7 @@ config.mongodb = {
 };
 if (PRODUCTION) {
     config.express = {
-      port: process.env.EXPRESS_PORT || 3000,
+      port: process.env.PORT || 5000,
       ip: process.env.EXPRESS_IP || "localhost"
     };
 
