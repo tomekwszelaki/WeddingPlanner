@@ -1,0 +1,54 @@
+<table>
+    <tr>
+        <th width="180">Imie i nazwisko</th>
+        <th width="120">Wiek</th>
+        <th width="100">Zaproszony</th>
+        <th width="100">Potwierdzony</th>
+        <th width="100">Noclegow</th>
+        <th>Uwagi</th>
+    </tr>
+</table>
+<span ng-repeat="guest in guestList">
+    <table ng-hide="editionEnabled" ng-click="editionEnabled = true"><tr>
+        <td width="200" align="left" valign="middle">{{guest.name}}</td>
+        <td width="150" align="left" valign="middle">{{guest.age}}</td>
+        <td width="50" align="left" valign="middle"><input type="checkbox" ng-checked="{{guest.invited}}" disabled></td>
+        <td width="150" align="left" valign="middle">{{guest.confirmed}}</td>
+        <td width="60" align="left" valign="middle">{{guest.stayingFor}}</td>
+        <td align="left" valign="middle">{{guest.notes}}</td>
+    </tr></table>
+    <table ng-show="editionEnabled"><tr>
+        <td><input size="25" type="text" ng-model="guest.name" ng-required=true></td>
+        <td><select ng-model="guest.age" ng-options="age for age in ages"></select></td>
+        <td><input type="checkbox" ng-model="guest.invited"></td>
+        <td><select ng-model="guest.confirmed" ng-options="conf for conf in confirmation"></select></td>
+        <td><select ng-model="guest.stayingFor" ng-options="len for len in lengthOfVisit"></select></td>
+        <td><textarea ng-model="guest.notes"></textarea></td>
+        <td><button class="btn" ng-click="editionEnabled = false; modifyGuest(guest)">Zapisz</button></td>
+        <td><button class="btn" ng-click="editionEnabled = false;">Anuluj</button></td>
+    </tr></table>
+</span>
+<br>
+<form ng-submit="addNewGuest()">
+    <tr ng-repeat="guest in guestList">
+        <td><input type="text" ng-model="name" placeholder="Imie i nazwisko" ng-required=true></td>
+        <td><select ng-model="age" ng-options="age for age in ages">
+            <option value="">-- wiek --</option>
+        </select></td>
+        <td><input type="checkbox" ng-model="invited"></td>
+        <td><select ng-model="confirmed" ng-options="conf for conf in confirmation">
+            <option value="">-- potwierdzenie --</option>
+        </select></td>
+        <td><select ng-model="stayingFor" ng-options="len for len in lengthOfVisit">
+            <option value="">-- ilosc noclegow --</option>
+        </select></td>
+        <td><textarea placeholder="Uwagi" ng-model="notes"></textarea></td>
+        <td><input type="submit" value="Dodaj"></td>
+    </tr>
+</form>
+<ul>
+    <li> Summary: </li>
+    <span>Zaproszonych: <strong>{{stats.invited.true}}</strong></span><span style="padding: 0 20px;">Nie zaproszonych: <strong>{{stats.invited.false}}</strong></span></tr><br>
+    Potwierdzonych: <span style="padding: 0 20px;" ng-repeat="(k, v) in stats.confirmed">{{k}}: <strong>{{v}}</strong></span></tr><br>
+    Osob: <span style="padding: 0 20px;" ng-repeat="(k, v) in stats.age">{{k}}: <strong>{{v}}</strong></span></tr><br>
+</ul>
