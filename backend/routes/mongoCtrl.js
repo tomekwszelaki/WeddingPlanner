@@ -2,7 +2,7 @@
  * Created by tomasj on 28/01/14.
  */
 
-var collections = {guests: "guests"}
+var collections = {guests: "guestList"}
 var methods = {insert: insert, save: save, findOne: findOne, find: find, findAndModify: findAndModify, update: update}
 
 var config = require('../../config');
@@ -39,23 +39,13 @@ function getConnection(callback) {
             return conn == null;
         },
         function (call) {
-//            mongoClient.connect("mongodb://" + config.mongodb.host + ":" + config.mongodb.port + "/zombiewar", function(err, db) {
             mongoClient.connect(config.mongodb.mongolabUri, function(err, db) {
-                if (err) throw err;
-                if (config.mongodb.auth) {
-                    db.authenticate(config.mongodb.user, config.mongodb.pass, function(err, result) {
-                        if (err) throw err;
-                        conn = db;
-                        winston.info("DB connection established with auth");
-                        return callback(null);
-                    })
+                if (err) {
+                    throw err;
                 }
-                else {
-                    conn = db;
-                    winston.info("DB connection established");
-                    return callback(null);
-                }
-
+                conn = db;
+                winston.info("DB connection established");
+                return callback(null);
             })
             setTimeout(call, 1000);
         },
