@@ -26,7 +26,8 @@ if (PRODUCTION) {
       host: process.env.MONGODB_HOST || 'localhost',
       auth: false,
       user: process.env.MONGODB_USER || 'admin',
-      pass: process.env.MONGODB_PASS || 'holapapi'
+      pass: process.env.MONGODB_PASS || 'holapapi',
+      mongolabUri: process.env.MONGOLAB_URI
     };
 }
 //config.db same deal
