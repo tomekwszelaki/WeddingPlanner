@@ -14,6 +14,18 @@ WeddingPlanner.config(function($routeProvider) {
             templateUrl: 'views/guestList.html',
             controller: 'GuestListCtrl'
         }).
+        when('/gallery', {
+            templateUrl: 'views/gallery.html',
+            controller: 'GalleryCtrl'
+        }).
+        when('/map', {
+            templateUrl: 'views/map.html',
+            controller: 'MapPageCtrl'
+        }).
+        when('/contact', {
+            templateUrl: 'views/contact.html',
+            controller: 'ContactPageCtrl'
+        }).
         otherwise({
             redirectTo: '/'
         });
