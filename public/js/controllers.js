@@ -97,7 +97,7 @@ controllers.controller('GuestListCtrl', ['$scope', '$http', function ($scope, $h
     $scope.confirmation = ['Brak', 'Tak, nie przyjedzie', 'Tak, przyjedzie'];
     $scope.confirmed = $scope.confirmation[0];
     $scope.notes = "";
-    $scope.searchFor = "";
+//    $scope.searchFor = "";
 }]);
 
 controllers.controller('ContactPageCtrl', ['$scope', function($scope) {

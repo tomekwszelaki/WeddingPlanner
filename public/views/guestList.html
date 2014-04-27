@@ -9,7 +9,7 @@
     </tr>
 </table>
 <span ng-repeat="guest in guestList | filter:searchFor">
-    <table ng-hide="editionEnabled" ng-click="editionEnabled = true"><tr>
+    <table class="center" ng-hide="editionEnabled" ng-click="editionEnabled = true"><tr>
         <td width="200" align="left" valign="middle">{{guest.name}}</td>
         <td width="150" align="left" valign="middle">{{guest.age}}</td>
         <td width="50" align="left" valign="middle"><input type="checkbox" ng-checked="{{guest.invited}}" disabled></td>
