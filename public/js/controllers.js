@@ -24,6 +24,8 @@ controllers.controller('GuestListCtrl', ['$scope', '$http', function ($scope, $h
                 }
             });
         });
+        delete $scope.stats.stayingFor[""];
+        delete $scope.stats.stayingFor[null];
     }
     $scope.load = function() {
         $http.get('/guests')
