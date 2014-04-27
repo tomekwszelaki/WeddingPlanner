@@ -46,7 +46,8 @@
         <td><input type="submit" value="Dodaj"></td>
     </tr>
 </form>
-<ul style="text-align: left">
+<br>
+<ul style="text-align: left; margin-left: 30px">
     <li> Summary: </li>
     <span>Zaproszonych: <strong>{{stats.invited.true}}</strong></span><span style="padding: 0 20px;">Nie zaproszonych: <strong>{{stats.invited.false}}</strong></span></tr><br>
     Potwierdzonych: <span style="padding: 0 20px;" ng-repeat="(k, v) in stats.confirmed">{{k}}: <strong>{{v}}</strong></span></tr><br>
