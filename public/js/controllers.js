@@ -3,9 +3,9 @@
  */
 
 
-var guestListCtrls = angular.module('controllers', []);
+var controllers = angular.module('controllers', []);
 
-guestListCtrls.controller('GuestListCtrl', ['$scope', '$http', function ($scope, $http) {
+controllers.controller('GuestListCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.guestList = {};
     $scope.refreshStats = function() {
         $scope.stats = {};
@@ -94,8 +94,25 @@ guestListCtrls.controller('GuestListCtrl', ['$scope', '$http', function ($scope,
     $scope.lengthOfVisit = [0,1,2,3,4,5,6,7,8,9];
     $scope.stayingFor = $scope.lengthOfVisit[0];
     $scope.invited = false;
-    $scope.confirmation = ['Nie', 'Tak, nie przyjedzie', 'Tak, przyjedzie'];
+    $scope.confirmation = ['Brak', 'Tak, nie przyjedzie', 'Tak, przyjedzie'];
     $scope.confirmed = $scope.confirmation[0];
     $scope.notes = "";
-
+    $scope.searchFor = "";
 }]);
+
+controllers.controller('ContactPageCtrl', ['$scope', function($scope) {
+    $scope.contactPeople = [
+        {
+            name: 'Judyta Tomczak',
+            email: 'email@judyta.com',
+            phone: '+48436363434534',
+            picture: 'some/URI/to/picture'
+        },
+        {
+            name: 'Joanna Wszelaka-Staniak',
+            email: 'email@joanna.com',
+            phone: '+48436363222534',
+            picture: 'some/URI/to/picture1'
+        }
+    ]
+}])
