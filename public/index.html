@@ -6,19 +6,29 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular-route.min.js"></script>
 
+    <script src="js/ng-flow-standalone.min.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/app.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script>
+        var loc = window.location+'';
+        if (loc.indexOf('http://')==0){
+            window.location.href = loc.replace('http://','https://');
+        }
+    </script>
 </head>
-<body>
+<body flow-prevent-drop>
     <nav class="{{active || 'home'}}">
 
 		<!-- When a link in the menu is clicked, we set the active variable -->
 
 		<a href="#" class="home" ng-click="active='home'">Home</a>
-		<a href="#/gallery" class="projects" ng-click="active='projects'">Gallery</a>
-		<a href="#/map" class="services" ng-click="active='services'">Map</a>
+		<a href="#/gallery" class="gallery" ng-click="active='gallery'">Gallery</a>
+		<a href="#/map" class="map" ng-click="active='map'">Map</a>
 		<a href="#/contact" class="contact" ng-click="active='contact'">Contact</a>
+		<a href="#/upload" class="upload" ng-click="active='upload'">Upload</a>
         <input type="search" placeholder="Search" ng-model="searchFor">
 	</nav>
     <div ng-view></div>
