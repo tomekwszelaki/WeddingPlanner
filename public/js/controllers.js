@@ -117,4 +117,14 @@ controllers.controller('ContactPageCtrl', ['$scope', function($scope) {
             picture: 'some/URI/to/picture1'
         }
     ]
-}])
+}]);
+
+controllers.controller('UploadCtrl', ['$scope', function($scope) {
+    $scope.upload = function() {
+        $window.alert('upload');
+    }
+}]);
+
+controllers.controller('GalleryCtrl', ['$scope', function($scope) {
+
+}]);
