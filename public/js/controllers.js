@@ -128,3 +128,7 @@ controllers.controller('UploadCtrl', ['$scope', function($scope) {
 controllers.controller('GalleryCtrl', ['$scope', function($scope) {
 
 }]);
+
+controllers.controller('MapPageCtrl', ['$scope', function($scope) {
+
+}]);
