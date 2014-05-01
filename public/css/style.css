@@ -87,8 +87,8 @@ p b{
 	font-size:18px;
 }
 
-table.center {
-    margin-left:25%;
+table.center .center{
+    margin-left:20%;
     margin-right:auto;
 }
 
