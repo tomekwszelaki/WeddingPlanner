@@ -67,7 +67,9 @@ nav.home .home,
 nav.gallery .gallery,
 nav.map .map,
 nav.contact .contact,
-nav.upload .upload{
+nav.upload .upload,
+nav.login .login,
+nav.list .list {
 	background-color:#e35885;
 }
 
