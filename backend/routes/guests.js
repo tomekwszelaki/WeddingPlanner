@@ -3,8 +3,9 @@
  */
 
 var winston = require('winston');
-var mongo = require('./mongoCtrl');
+var mongo = require('./../utils/mongoCtrl');
 var ObjectId = require('mongodb').ObjectID;
+var middleware = require('./../utils/middleware');
 
 function addGuest(req, res) {
     console.log("%s: %j", "addGuest request, body", req.body, {});
@@ -56,10 +57,10 @@ function options(req, res) {
 }
 
 function setup(app) {
-    app.get('/guests', getGuests);
-    app.post('/guests', addGuest);
+    app.get('/guests', middleware.ensureAuth, getGuests);
+    app.post('/guests', middleware.ensureAuth, addGuest);
     app.options('/guests', options);
-    app.put('/guests/:id', modifyGuest);
+    app.put('/guests/:id', middleware.ensureAuth, modifyGuest);
     app.options('/guests/:id', options);
 }
 

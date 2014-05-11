@@ -5,6 +5,10 @@
 
 var controllers = angular.module('controllers', []);
 
+controllers.controller('HomeCtrl', ['$scope', function($scope) {
+
+}]);
+
 controllers.controller('GuestListCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.guestList = {};
     $scope.refreshStats = function() {
@@ -120,8 +124,94 @@ controllers.controller('ContactPageCtrl', ['$scope', function($scope) {
 }]);
 
 controllers.controller('UploadCtrl', ['$scope', function($scope) {
-    $scope.upload = function() {
-        $window.alert('upload');
+//    $scope.event = $scope.obj.flow;
+    $scope.file = 'file';
+    $scope.eventResps = []
+    $scope.$on('flow::fileAdded', function(event, $flow, flowFile) {
+        console.log('file added ', flowFile);
+        $scope.file = flowFile;
+        $scope.event = event;
+    });
+    $scope.$on('flow::fileSuccess', function(event, $flow, flowFile, message) {
+        console.log(JSON.parse(message));
+    });
+
+    $scope.fileSuccess = function(file, message) {
+        console.log('fileSuccess', file, message);
+        var eventResp = {}
+        eventResp.name = 'fileSuccess';
+        eventResp.file = JSON.stringify(file);
+        eventResp.message = JSON.stringify(message);
+        $scope.eventResps.push(eventResp);
+    }
+
+    $scope.fileAdded = function(file, event) {
+        console.log('fileAdded', file, event);
+        var eventResp = {}
+        eventResp.name = 'fileAdded';
+        eventResp.file = JSON.stringify(file);
+        eventResp.event = JSON.stringify(event);
+        $scope.eventResps.push(eventResp);
+    }
+
+    $scope.filesAdded = function(files, event) {
+        console.log('filesAdded', files, event);
+        var eventResp = {}
+        eventResp.name = 'filesAdded';
+        eventResp.files = JSON.stringify(files);
+        eventResp.event = JSON.stringify(event);
+        $scope.eventResps.push(eventResp);
+    }
+
+    $scope.fileProgress = function(file) {
+        console.log('fileProgress', file);
+        var eventResp = {}
+        eventResp.name = 'fileProgress';
+        eventResp.file = JSON.stringify(file);
+        $scope.eventResps.push(eventResp);
+//            $scope.eventResp.name = JSON.stringify(message);
+    }
+
+    $scope.fileError = function(file, message) {
+        console.log('fileError', file, message);
+        var eventResp = {}
+        eventResp.name = 'fileError';
+        eventResp.file = JSON.stringify(file);
+        eventResp.name = JSON.stringify(message);
+        $scope.eventResps.push(eventResp);
+    }
+
+    $scope.flowError = function(file, message) {
+        console.log('flowError', file, message);
+        var eventResp = {}
+        eventResp.name = 'flowError';
+        eventResp.file = JSON.stringify(file);
+        eventResp.name = JSON.stringify(message);
+        $scope.eventResps.push(eventResp);
+    }
+
+    $scope.flowCompleted = function(anyvalue) {
+        console.log('flowCompleted', anyvalue);
+        var eventResp = {}
+        eventResp.name = 'flowCompleted';
+        eventResp.value = JSON.stringify(anyvalue);
+        $scope.eventResps.push(eventResp);
+    }
+
+    $scope.uploadStarted = function(anyvalue) {
+        console.log('uploadStarted', anyvalue);
+        var eventResp = {}
+        eventResp.name = 'uploadStarted';
+        eventResp.value = JSON.stringify(anyvalue);
+        $scope.eventResps.push(eventResp);
+    }
+
+    $scope.progressOverall = function(anyvalue) {
+        console.log('progressOverall', anyvalue);
+        var eventResp = {}
+        eventResp.name = 'progressOverall';
+        eventResp.value = JSON.stringify(anyvalue);
+        $scope.eventResps.push(eventResp);
     }
 }]);
 

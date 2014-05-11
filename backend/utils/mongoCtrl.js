@@ -2,11 +2,11 @@
  * Created by tomasj on 28/01/14.
  */
 
-var collections = {guests: "guests"}
+var collections = {guests: "guests", users: 'users'}
 var methods = {insert: insert, save: save, findOne: findOne, find: find, findAndModify: findAndModify, update: update}
 
 var config = require('../../config');
-var winston = require("winston");
+var winston = require('winston');
 var mongoClient = require('mongodb').MongoClient;
 var async = require('async');
 var conn = null;
@@ -29,13 +29,13 @@ function execute(method, col, criteria, doc, options, cb) {
 // by other modules before calling the actual mongoCtrl method like insert or find
 function getConnection(callback) {
     if (conn) {
-        winston.info("Connection established previously, reusing connection")
+        winston.info('Connection established previously, reusing connection')
         return callback(null);
     }
     else {
        async.whilst(
         function() {
-            if (conn == null) winston.info("Connection is null, establishing...")
+            if (conn == null) winston.info('Connection is null, establishing...')
             return conn == null;
         },
         function (call) {
@@ -44,10 +44,10 @@ function getConnection(callback) {
                     throw err;
                 }
                 conn = db;
-                winston.info("DB connection established");
+                winston.info('DB connection established');
                 return callback(null);
             })
-            setTimeout(call, 3000);
+            setTimeout(call, 5000);
         },
         function(err) {
             if (err) return callback(err);
@@ -56,74 +56,74 @@ function getConnection(callback) {
 }
 
 function insert(col, doc, cb) {
-    winston.debug("%s %j %s %s", "going to insert:", doc, "to", col, {});
+    winston.debug('%s %j %s %s', 'going to insert:', doc, 'to', col, {});
     var collection = conn.collection(col);
     collection.insert(doc, function(err, docs) {
         if (err) cb(err, null);
-        winston.info("%s '%s': %s", "collection", col, "insert successful");
-        winston.debug("%s: %j", "document inserted", docs, {});
+        winston.info('%s "%s": %s', 'collection', col, 'insert successful');
+        winston.debug('%s: %j', 'document inserted', docs, {});
         cb(null, docs); // return a cursor object
     });
 };
 
 function save(col, doc, cb) {
-    winston.debug("%s %j %s %s", "going to save:", doc, "to", col, {});
+    winston.debug('%s %j %s %s', 'going to save:', doc, 'to', col, {});
     var collection = conn.collection(col);
     collection.save(doc, {safe: true}, function(err, docs) {
         if (err) cb(err, null);
-        winston.info("%s '%s': %s", "collection", col, "save successful");
-        winston.debug("%s: %j", "document created/modified", docs, {});
+        winston.info('%s "%s": %s', 'collection', col, 'save successful');
+        winston.debug('%s: %j', 'document created/modified', docs, {});
         cb(null, docs); // return an int - the number of documents changed
     });
 };
 
 function findAndModify(col, criteria, doc, cb) {
-    winston.debug("%s %j %s %s", "going to findAndModify:", doc, "to", col);
+    winston.debug('%s %j %s %s', 'going to findAndModify:', doc, 'to', col);
     var collection = conn.collection(col);
     collection.findAndModify(criteria, doc, {new: true, upsert: false}, function(err, docs) {
         if (err) cb(err, null);
-        winston.info("%s '%s': %s", "collection", col, "findAndModify successful", {});
-        winston.debug("%s: %j", "document found and modified", docs, {});
+        winston.info('%s "%s": %s', 'collection', col, 'findAndModify successful', {});
+        winston.debug('%s: %j', 'document found and modified', docs, {});
         cb(null, docs); // return an int - the number of documents changed
     });
 };
 
 function update(col, criteria, doc, options, cb) {
-    winston.debug("%s %j %s %s", "going to update:", doc, "to", col, {});
+    winston.debug('%s %j %s %s', 'going to update:', doc, 'to', col, {});
     var collection = conn.collection(col);
     collection.update(criteria, doc, options, function(err, docs) {
         if (err) cb(err, null);
-        winston.info("%s '%s': %s", "collection", col, "update successful", {});
-        winston.debug("%s: %j", "document updated", docs, {});
+        winston.info('%s "%s": %s', 'collection', col, 'update successful', {});
+        winston.debug('%s: %j', 'document updated', docs, {});
         cb(null, docs); // return an int - the number of documents changed
     });
 }
 
 function findOne(col, doc, cb) {
-    winston.debug("%s %j %s %s", "going to findOne:", doc, "to", col, {});
+    winston.debug('%s %j %s %s', 'going to findOne:', doc, 'to', col, {});
     var collection = conn.collection(col);
     collection.findOne(doc, function(err, docs) {
         if (err) cb(err, null);
-        winston.info("%s '%s': %s", "collection", col, "findOne successful", {});
-        winston.debug("%s: %j", "record found", docs, {});
+        winston.info('%s "%s": %s', 'collection', col, 'findOne successful', {});
+        winston.debug('%s: %j', 'record found', docs, {});
         cb(null, docs); // returns a single document
     });
 }
 
 function find(col, doc, cb) {
-    winston.debug("%s %j %s %s", "going to find:", doc, "to", col, {});
+    winston.debug('%s %j %s %s', 'going to find:', doc, 'to', col, {});
     var collection = conn.collection(col);
     collection.find(doc, function(err, docs) {
         if (err) cb(err, null);
-        winston.info("%s '%s': %s", "collection", col, "find successful", {});
+        winston.info('%s "%s": %s', 'collection', col, 'find successful', {});
         // docs - is a cursor object, we have to convert it into an Array to be able to return it
-        // WARNING / TODO: paging is necesasry as "toArray" loads the whole collection into memory
+        // WARNING / TODO: paging is necesasry as 'toArray' loads the whole collection into memory
         docs.toArray(function(err, data) {
             if (err) {
                 cb(err, null);
             }
             else {
-                winston.debug("%s: %d", "record(s) found", data.length, {});
+                winston.debug('%s: %d', 'record(s) found', data.length, {});
                 cb(null, data);
             }
         })
