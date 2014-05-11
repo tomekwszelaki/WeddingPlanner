@@ -4,32 +4,45 @@
 
 
 var config = module.exports;
-var PRODUCTION = process.env.NODE_ENV === "production";
+//var PRODUCTION = process.env.NODE_ENV === "production";
+
 
 config.express = {
   port: process.env.PORT || 5000,
-  ip: "localhost"
+  ip: process.env.EXPRESS_IP || "localhost",
+  cookieSecret: process.env.COOKIE_SECRET,
+  sessionSecret: process.env.SESSION_SECRET
 };
 
 config.mongodb = {
-  port: process.env.MONGODB_PORT || 27017,
-  host: process.env.MONGODB_HOST || 'localhost'
+  mongolabUri: process.env.MONGOLAB_URI
 };
-if (PRODUCTION) {
-    config.express = {
-      port: process.env.PORT || 5000,
-      ip: process.env.EXPRESS_IP || "localhost"
-    };
 
-    config.mongodb = {
-      port: process.env.MONGODB_PORT || 27017,
-      host: process.env.MONGODB_HOST || 'localhost',
-      auth: false,
-      user: process.env.MONGODB_USER || 'admin',
-      pass: process.env.MONGODB_PASS || 'holapapi',
-      mongolabUri: process.env.MONGOLAB_URI
-    };
+config.redis = {
+  redisCloudUrl: process.env.REDISCLOUD_URL
 }
-//config.db same deal
-//config.email etc
-//config.log
+
+config.box = {
+  clientId: process.env.BOX_CLIENT_ID,
+  clientSecret: process.env.BOX_CLIENT_SECRET,
+  callbackURL: 'http://127.0.0.1:' + config.express.port + '/auth/box/callback'
+}
+
+config.facebook = {
+  clientId: process.env.FB_CLIENT_ID,
+  clientSecret: process.env.FB_CLIENT_SECRET,
+  callbackURL: 'http://judytaitomek.herokuapp.com:5000/auth/facebook/callback'
+}
+
+config.rabbitmq = {
+    publisherURL: process.env.RABBITMQ_BIGWIG_TX_URL,
+    receiverURL: process.env.RABBITMQ_BIGWIG_RX_URL,
+    implOptions: {
+        reconnect: true,
+        reconnectBackoffStrategy: 'linear', // or 'exponential'
+        reconnectBackoffTime: 500,
+        durable: true,
+        autoDelete: true
+    },
+    uploadQueue: 'upload'
+}
