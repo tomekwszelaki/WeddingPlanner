@@ -9,6 +9,9 @@ var path = require('path');
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var common = require('./backend/utils/common');
+var redis = require('./backend/utils/redisCtrl');
+redis.init();
+var RedisStore = require('connect-redis')(express);
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -58,7 +61,11 @@ app.use(express.cookieParser());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(express.session({ secret: 'this-is-my-awesome-super-secret' }));
+app.use(express.session({
+    secret: process.env.SESSION_SECRET || 'holapapi',
+    maxAge : new Date(Date.now() + (3600000 * 2)), // 2h Session lifetime
+    store: new RedisStore({client: redis.getInstance()})
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
