@@ -31,7 +31,7 @@ config.box = {
 config.facebook = {
   clientId: process.env.FB_CLIENT_ID,
   clientSecret: process.env.FB_CLIENT_SECRET,
-  callbackURL: 'http://judytaitomek.herokuapp.com/auth/facebook/callback'
+  callbackURL: 'https://judytaitomek.herokuapp.com/auth/facebook/callback'
 }
 
 config.rabbitmq = {
