@@ -104,6 +104,11 @@ controllers.controller('GuestListCtrl', ['$scope', '$http', function ($scope, $h
     $scope.confirmed = $scope.confirmation[0];
     $scope.notes = "";
 //    $scope.searchFor = "";
+    $scope.orderBySurname = function(guest) {
+        var split = guest.name.split(' ');
+        console.log(split);
+        return split[split.length - 1];
+    }
 }]);
 
 controllers.controller('ContactPageCtrl', ['$scope', function($scope) {

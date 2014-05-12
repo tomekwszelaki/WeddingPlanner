@@ -57,10 +57,10 @@ function options(req, res) {
 }
 
 function setup(app) {
-    app.get('/guests', middleware.ensureAuth, getGuests);
-    app.post('/guests', middleware.ensureAuth, addGuest);
+    app.get('/guests', middleware.ensureUserIsAdmin, getGuests);
+    app.post('/guests', middleware.ensureUserIsAdmin, addGuest);
     app.options('/guests', options);
-    app.put('/guests/:id', middleware.ensureAuth, modifyGuest);
+    app.put('/guests/:id', middleware.ensureUserIsAdmin, modifyGuest);
     app.options('/guests/:id', options);
 }
 
