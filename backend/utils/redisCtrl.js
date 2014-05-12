@@ -6,7 +6,7 @@ var config = require('../../config');
 var redis = require('redis');
 var url = require('url');
 
-var redisCtrl;
+var redisCtrl = null;
 
 function RedisCtrl() {
     this.redisURL = null;
@@ -18,7 +18,7 @@ function RedisCtrl() {
     };
 }
 
-RedisCtrl.prototype.connect = function() {
+RedisCtrl.prototype.connect = function(callback) {
     console.log('Redis: establishing connection...');
     this.redisURL = url.parse(config.redis.redisCloudUrl);
     this.client = redis.createClient(this.redisURL.port, this.redisURL.hostname, {no_ready_check: true});
@@ -28,12 +28,14 @@ RedisCtrl.prototype.connect = function() {
     });
     this.client.on('ready'       , function() {
         console.log('Redis: ready.');
+        callback(null, 'ready');
     });
     this.client.on('reconnecting', function() {
         console.log('Redis: reconnecting.');
     });
     this.client.on('error'       , function(err) {
         console.error('Redis error: ' + err);
+        callback(err);
     });
     this.client.on('end'         , function() {
         console.log('Redis: connection ended.');
@@ -50,9 +52,38 @@ RedisCtrl.prototype.end = function() {
     this.client.end();
 }
 
-function init() {
+function _init(callback) {
     redisCtrl = new RedisCtrl();
-    redisCtrl.connect();
+    redisCtrl.connect(function(err, result) {
+        callback(err, result);
+    });
+}
+
+function init() {
+    if (redisCtrl === null) {
+        _init(function(err, result) {
+            if (err) {
+                console.log('Unable to connect to redis. Error: ', err);
+                throw new err;
+            }
+            else {
+                console.log('redisCtrl response: ', result);
+                return redisCtrl.client;
+            }
+        });
+    }
+    else {
+        console.log('redisCtrl: reusing connection');
+        return redisCtrl.client;
+    }
+}
+
+function getInstance() {
+    return init();
+}
+
+function end() {
+    redisCtrl.end();
 }
 
 function insertAccessToken(token, timeout, cb) {
@@ -79,10 +110,6 @@ function getRefreshToken(cb) {
     redisCtrl.client.get(redisCtrl.defaults.refreshToken, cb);
 };
 
-function end() {
-    redisCtrl.end();
-}
-
 module.exports = {
     init: init,
     insertAccessToken: insertAccessToken,
@@ -91,5 +118,6 @@ module.exports = {
     checkRefreshTokenTTL: checkRefreshTokenTTL,
     getAccessToken: getAccessToken,
     getRefreshToken: getRefreshToken,
-    end: end
+    end: end,
+    getInstance: getInstance
 }
