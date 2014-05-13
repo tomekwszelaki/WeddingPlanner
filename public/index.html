@@ -8,17 +8,16 @@
     <script src="https://flowjs.github.io/ng-flow/bower_components/flow.js/dist/flow.js"></script>
 
     <script src="js/ng-flow-standalone.min.js"></script>
-    <script src="js/controllers.js"></script>
     <script src="js/app.js"></script>
 
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <!--<script>-->
-        <!--var loc = window.location+'';-->
-        <!--if (loc.indexOf('http://')==0){-->
-            <!--window.location.href = loc.replace('http://','https://');-->
-        <!--}-->
-    <!--</script>-->
+    <script>
+        var loc = window.location+'';
+        if (loc.indexOf('http://')==0){
+            window.location.href = loc.replace('http://','https://');
+        }
+    </script>
 </head>
 <body flow-prevent-drop logged="false">
     <nav class="{{active || 'home'}}" ng-controller="LoginCtrl">
