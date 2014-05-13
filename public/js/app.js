@@ -39,7 +39,7 @@ WeddingPlanner.service('auth', ['$http', function($http) {
         self.log.push('going to update login status');
 		$http({method: 'GET', url: '/loggedin'}).
 		success(function(data, status, headers, config) {
-			if (null !== data['fb_id']) {
+			if (null != data['fb_id']) {
                 self.log.push('user authenticated');
 				self.logged = true;
 				self.username = data['first_name'];
