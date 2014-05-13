@@ -25,7 +25,6 @@ var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
 var WeddingPlanner = angular.module('WeddingPlanner', [
     'flow',
     'ngRoute'
-//    'controllers'
 ]);
 
 WeddingPlanner.service('auth', ['$http', function($http) {
