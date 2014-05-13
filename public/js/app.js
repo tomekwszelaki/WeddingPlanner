@@ -344,11 +344,11 @@ WeddingPlanner.controller('MapPageCtrl', ['$scope', function($scope) {
 
 WeddingPlanner.controller('LoginCtrl', ['$scope', '$location', 'auth', function($scope, $location, auth) {
     $scope.data = auth.log;
-    $scope.name = auth.username
 
 	auth.updateIfNeeded(function(){
 		if (true === auth.logged) {
 			document.body.setAttribute('logged', true);
+            $scope.name = auth.username;
 		}
 	});
 }]);
