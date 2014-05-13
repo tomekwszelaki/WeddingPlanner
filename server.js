@@ -104,7 +104,7 @@ app.get('/auth/facebook/callback',
 app.get('/loggedin', function(req, res) {
     console.log('loggedin: ', req.isAuthenticated() && req.user.is_admin);
     console.log('user: ', req.user);
-    res.send((req.isAuthenticated() && req.user.is_admin) ? req.user : '0');
+    res.send((req.isAuthenticated() && req.user && req.user.is_admin) ? req.user : '0');
 });
 
 app.get('/logout', function(req, res){
