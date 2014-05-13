@@ -64,7 +64,7 @@ function init() {
         _init(function(err, result) {
             if (err) {
                 console.log('Unable to connect to redis. Error: ', err);
-                throw new err;
+                throw err;
             }
             else {
                 console.log('redisCtrl response: ', result);
