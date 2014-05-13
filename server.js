@@ -101,9 +101,13 @@ app.get('/auth/facebook/callback',
     res.redirect('/');
   });
 
-app.get('/loggedin', function(req, res) {
-    console.log('loggedin: ', req.isAuthenticated() && req.user.is_admin);
-    console.log('user: ', req.user);
+app.get('/isAuthenticated', function(req, res) {
+    console.log('isAuthenticated: user: ', req.user);
+    res.send((req.isAuthenticated() && req.user) ? req.user : '0');
+});
+
+app.get('/isAdmin', function(req, res) {
+    console.log('isAdmin: user: ', req.user);
     res.send((req.isAuthenticated() && req.user && req.user.is_admin) ? req.user : '0');
 });
 

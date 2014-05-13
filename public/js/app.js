@@ -2,11 +2,11 @@
  * Created by tomasj on 26/04/14.
  */
 
-var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+var checkIfIsAdmin = function($q, $timeout, $http, $location, $rootScope) {
 // Initialize a new promise
     var deferred = $q.defer();
 // Make an AJAX call to check if the user is logged in
-    $http.get('/loggedin').success(function(user) {
+    $http.get('/isAdmin').success(function(user) {
         // Authenticated
         if (user !== '0') {
             $timeout(deferred.resolve, 0);
@@ -37,7 +37,7 @@ WeddingPlanner.service('auth', ['$http', function($http) {
 
 	this.update = function(callback) {
         self.log.push('going to update login status');
-		$http({method: 'GET', url: '/loggedin'}).
+		$http({method: 'GET', url: '/isAuthenticated'}).
 		success(function(data, status, headers, config) {
 			if (null != data['fb_id']) {
                 self.log.push('user authenticated');
@@ -51,7 +51,7 @@ WeddingPlanner.service('auth', ['$http', function($http) {
 			undefined === callback || callback(self);
 		}).
 		error(function(data, status, headers, config) {
-			self.log.push('Connection to /loggedin failed');
+			self.log.push('Connection to /isAuthenticated failed');
 		});
 
 		callback(self);
@@ -76,7 +76,7 @@ WeddingPlanner.config(function($routeProvider) {
             templateUrl: 'views/guestList.html',
             controller: 'GuestListCtrl',
             resolve: {
-                loggedin: checkLoggedin
+                loggedin: checkIfIsAdmin
             }
         }).
         when('/gallery', {
