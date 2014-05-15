@@ -116,9 +116,6 @@ WeddingPlanner.config(['flowFactoryProvider', function (flowFactoryProvider) {
     // flowFactoryProvider.factory = fustyFlowFactory;
 }]);
 
-
-
-
 WeddingPlanner.controller('HomeCtrl', ['$scope', function($scope) {
 
 }]);

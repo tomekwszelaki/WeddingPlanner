@@ -144,9 +144,22 @@ table.center{
 
 .footer {
     min-height: 30px;
-    margin: 10px auto 10px auto;
+    min-width: 80%;
+    margin: 10px auto 0 auto;
     /*background-color:#5597b4;*/
-    background-color:#e35885;
-    position:absolute;
-    bottom: -100px;
+    background-color:#5597b4;
+    position:relative;
+    bottom: 0px;
+}
+
+.searchInput {
+    float: right;
+    margin-right: 20%;
+    border-radius: 2px;
+    border: 2px #808080 solid;
+}
+
+.downloadBtn {
+    float: left;
+    margin-left: 20%;
 }
