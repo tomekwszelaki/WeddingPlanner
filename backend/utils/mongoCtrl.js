@@ -15,7 +15,7 @@ function execute(method, col, criteria, doc, options, cb) {
     getConnection(function(err){
         if (err) cb(err, null);
         switch(method) {
-            case methods.find: find(col, doc, cb); break;
+            case methods.find: find(col, doc, options, cb); break;
             case methods.findOne: findOne(col, doc, cb); break;
             case methods.insert: insert(col, doc, cb); break;
             case methods.save: save(col, doc, cb); break;
@@ -110,10 +110,10 @@ function findOne(col, doc, cb) {
     });
 }
 
-function find(col, doc, cb) {
-    winston.debug('%s %j %s %s', 'going to find:', doc, 'to', col, {});
+function find(col, doc, options, cb) {
+    winston.debug('%s %j %s %s %s %j', 'going to find:', doc, 'in', col, 'options', options, {});
     var collection = conn.collection(col);
-    collection.find(doc, function(err, docs) {
+    collection.find(doc, options, function(err, docs) {
         if (err) cb(err, null);
         winston.info('%s "%s": %s', 'collection', col, 'find successful', {});
         // docs - is a cursor object, we have to convert it into an Array to be able to return it
