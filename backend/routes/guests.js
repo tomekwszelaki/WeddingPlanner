@@ -37,7 +37,7 @@ function modifyGuest(req, res) {
     });
 }
 function _getUsersAsData(doc, options, res) {
-    winston.debug("_getUsersAsData request");
+    console.log("_getUsersAsData request");
     mongo.execute(mongo.methods.find, mongo.collections.guests, null, doc, options, function(err, data) {
         if (err) {
             throw err
@@ -48,7 +48,7 @@ function _getUsersAsData(doc, options, res) {
 }
 
 function _getUsersAsCSVFile(doc, options, res) {
-    winston.debug("_getUsersAsCSVFile request");
+    console.log("_getUsersAsCSVFile request");
     mongo.execute(mongo.methods.find, mongo.collections.guests, null, doc, options, function(err, data) {
         if (err) {
             throw err
@@ -63,7 +63,7 @@ function _getUsersAsCSVFile(doc, options, res) {
                 noOfColumns = 2;
             }
         });
-        var filename = 'KochamCie.doc';
+        var filename = 'Kocham Cie - lista gosci.doc';
         res.setHeader('content-type', 'application/octet-stream;charset=utf-8');
         res.setHeader('content-disposition', 'attachment; filename=' + filename);
         res.send(content, 200);
@@ -71,9 +71,10 @@ function _getUsersAsCSVFile(doc, options, res) {
 }
 
 function getGuests(req, res) {
+    console.log('getUsers: query:', req.query);
     var doc = {};
     var options = {};
-    if (req.query.file == true) {
+    if (req.query.file == 'true') {
         doc.confirmed = 'Tak, przyjedzie';
         options.name = true;
 //        options.confirmed = true;
