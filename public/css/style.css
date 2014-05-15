@@ -99,6 +99,14 @@ body[logged="true"] .login{
     display: none;
 }
 
+body[logged="false"] .upload{
+    display: none;
+}
+
+body[logged="true"] .upload{
+    display: inline-block;
+}
+
 p{
 	font-size:22px;
 	font-weight:bold;
