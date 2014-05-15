@@ -73,6 +73,14 @@ function upsert(user, callback) {
     mongo.execute(mongo.methods.save, mongo.collections.users, null, user, null, callback);
 }
 
+function padString(str, expLength) {
+    var len = expLength || 41
+    if (str.length >= len){
+        return str;
+    }
+    return str + Array(len - str.length).join(' ');
+}
 
 module.exports.generateRandomString = generate;
 module.exports.upsertUser = upsertUser;
+module.exports.padString = padString;

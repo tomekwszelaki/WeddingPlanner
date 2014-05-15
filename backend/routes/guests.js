@@ -6,6 +6,7 @@ var winston = require('winston');
 var mongo = require('./../utils/mongoCtrl');
 var ObjectId = require('mongodb').ObjectID;
 var middleware = require('./../utils/middleware');
+var common = require('./../utils/common');
 
 function addGuest(req, res) {
     console.log("%s: %j", "addGuest request, body", req.body, {});
@@ -35,17 +36,52 @@ function modifyGuest(req, res) {
         res.send(200, {'status': 'OK'});
     });
 }
-
-function getGuests(req, res) {
-    winston.debug("getGuests request");
-    mongo.execute(mongo.methods.find, mongo.collections.guests, null, {}, null, function(err, data) {
+function _getUsersAsData(doc, options, res) {
+    winston.debug("_getUsersAsData request");
+    mongo.execute(mongo.methods.find, mongo.collections.guests, null, doc, options, function(err, data) {
         if (err) {
             throw err
         }
-        res.set('Content-Type', 'application/json');
-        res.set('Access-Control-Allow-Origin', '*');
+        res.setHeader('Content-Type', 'application/json;charset=utf-8');
         res.send(200, data);
     });
+}
+
+function _getUsersAsCSVFile(doc, options, res) {
+    winston.debug("_getUsersAsCSVFile request");
+    mongo.execute(mongo.methods.find, mongo.collections.guests, null, doc, options, function(err, data) {
+        if (err) {
+            throw err
+        }
+        var content = '';
+        var noOfColumns = 2;
+        data.forEach(function(guest) {
+            content += common.padString(guest.name, 35);
+            noOfColumns--;
+            if (noOfColumns == 0) {
+                content += '\n';
+                noOfColumns = 2;
+            }
+        });
+        var filename = 'KochamCie.doc';
+        res.setHeader('content-type', 'application/octet-stream;charset=utf-8');
+        res.setHeader('content-disposition', 'attachment; filename=' + filename);
+        res.send(content, 200);
+        });
+}
+
+function getGuests(req, res) {
+    var doc = {};
+    var options = {};
+    if (req.query.file == true) {
+        doc.confirmed = 'Tak, przyjedzie';
+        options.name = true;
+//        options.confirmed = true;
+        _getUsersAsCSVFile(doc, options, res);
+    }
+    else {
+        _getUsersAsData(doc, options, res);
+    }
 }
 
 function options(req, res) {
