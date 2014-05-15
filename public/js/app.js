@@ -13,6 +13,26 @@ var checkIfIsAdmin = function($q, $timeout, $http, $location, $rootScope) {
         }
         // Not Authenticated
         else {
+            $rootScope.message = 'You need to be an admin to access this element.';
+            $timeout(function() {
+                deferred.reject();
+            }, 0);
+            $location.url('/');
+        }
+    });
+};
+
+var checkIfAuthenticated = function($q, $timeout, $http, $location, $rootScope) {
+// Initialize a new promise
+    var deferred = $q.defer();
+// Make an AJAX call to check if the user is logged in
+    $http.get('/isAuthenticated').success(function(user) {
+        // Authenticated
+        if (user !== '0') {
+            $timeout(deferred.resolve, 0);
+        }
+        // Not Authenticated
+        else {
             $rootScope.message = 'You need to log in.';
             $timeout(function() {
                 deferred.reject();
@@ -93,7 +113,10 @@ WeddingPlanner.config(function($routeProvider) {
         }).
         when('/upload', {
             templateUrl: 'views/upload.html',
-            controller: 'UploadCtrl'
+            controller: 'UploadCtrl',
+            resolve: {
+                loggedin: checkIfAuthenticated
+            }
         }).
         otherwise({
             redirectTo: '/'
