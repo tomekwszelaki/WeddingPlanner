@@ -36,6 +36,12 @@ function modifyGuest(req, res) {
         res.send(200, {'status': 'OK'});
     });
 }
+
+function _getSurname(guest) {
+    var nameParts = guest.name.split(' ');
+    return nameParts[nameParts.length - 1];
+}
+
 function _getUsersAsData(doc, options, res) {
     console.log("_getUsersAsData request");
     mongo.execute(mongo.methods.find, mongo.collections.guests, null, doc, options, function(err, data) {
@@ -55,6 +61,9 @@ function _getUsersAsCSVFile(doc, options, res) {
         }
         var content = '';
         var noOfColumns = 2;
+        data.sort(function(guest1, guest2) {
+            return _getSurname(guest1).localeCompare(_getSurname(guest2));
+        })
         data.forEach(function(guest) {
             content += common.padString(guest.name, 35);
             noOfColumns--;
@@ -94,7 +103,7 @@ function options(req, res) {
 }
 
 function setup(app) {
-    app.get('/guests', middleware.ensureUserIsAdmin, getGuests);
+    app.get('/guests', getGuests);
     app.post('/guests', middleware.ensureUserIsAdmin, addGuest);
     app.options('/guests', options);
     app.put('/guests/:id', middleware.ensureUserIsAdmin, modifyGuest);

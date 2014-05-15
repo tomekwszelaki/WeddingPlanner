@@ -12,12 +12,12 @@
 
     <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script>
-        var loc = window.location+'';
-        if (loc.indexOf('http://')==0){
-            window.location.href = loc.replace('http://','https://');
-        }
-    </script>
+    <!--<script>-->
+        <!--var loc = window.location+'';-->
+        <!--if (loc.indexOf('http://')==0){-->
+            <!--window.location.href = loc.replace('http://','https://');-->
+        <!--}-->
+    <!--</script>-->
 </head>
 <body flow-prevent-drop logged="false">
     <nav class="{{active || 'home'}}" ng-controller="LoginCtrl">
@@ -30,7 +30,6 @@
 		<a href="#/map" class="map" ng-click="active='map'">Map</a>
 		<a href="#/contact" class="contact" ng-click="active='contact'">Contact</a>
 		<a href="#/upload" class="upload" ng-click="active='upload'">Upload</a>
-        <input type="search" placeholder="Search" ng-model="searchFor">
         <a href="/auth/facebook" class="login" ng-click=""><img src="img/login-with-facebook.png" width="154" height="22"></a>
         <a href="/logout" class="logout" ng-click="">Hi {{name}}! Logout</a>
 	</nav>
